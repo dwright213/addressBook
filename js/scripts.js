@@ -4,14 +4,29 @@ $(document).ready(function() {
 
     var inputtedFirstName = $("input#new-first-name").val();
     var inputtedLastName = $("input#new-last-name").val();
-    var inputtedAddress = $("input#new-address").val();
-    var newContact = { firstName: inputtedFirstName, lastName: inputtedLastName, address: inputtedAddress };
+    var inputtedStreet = $("input#new-street").val();
+    var inputtedCity = $("input#new-city").val();
+    var inputtedState = $("input#new-state").val();
+    var newAddress = { firstName: inputtedFirstName, lastName: inputtedLastName,
+                      street: inputtedStreet, city: inputtedCity,
+                      state: inputtedState,
+                      fullAddress: function() {
+                        return this.street + ", " + this.city + ", " + this.state;
+                      }
+                    };
+
+    var newContact = { firstName: inputtedFirstName,
+                    lastName: inputtedLastName,
+                    address: newAddress.fullAddress()
+                    };
 
     $("ul#contacts").append("<li><span class='contact'>" + newContact.firstName + " " + newContact.lastName + "</span></li>");
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
-    $("input#new-address").val("");
+    $("input#new-street").val("");
+    $("input#new-city").val("");
+    $("input#new-state").val("");
 
     $(".contact").last().click(function() {
       $("#show-contact").show();
@@ -19,6 +34,7 @@ $(document).ready(function() {
       $(".first-name").text(newContact.firstName);
       $(".last-name").text(newContact.lastName);
       $(".address").text(newContact.address);
+
     });
   });
 });
